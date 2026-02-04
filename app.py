@@ -1,5 +1,6 @@
 import matplotlib.pyplot as plt
 import streamlit as st
+from github_analyzer import analyze_github_profile
 from resume_parser import extract_text_from_pdf, extract_text_from_docx, extract_skills_from_resume
 from utils import get_skills_for_role
 from gap_engine import analyze_skill_gap
@@ -12,6 +13,9 @@ role = st.selectbox("Select Target Job Role", list(job_roles.keys()))
 
 # Resume input
 uploaded_file = st.file_uploader("Upload Resume", type=["pdf", "docx"])
+
+# GitHub input
+github_username = st.text_input("Enter GitHub Username")
 
 if st.button("Analyze", key="analyze_button"):
 
@@ -58,13 +62,21 @@ if st.button("Analyze", key="analyze_button"):
 
         st.pyplot(fig)
 
+        if github_username:
+            github_data = analyze_github_profile(github_username)
+
+            if github_data:
+                st.subheader("GitHub Profile Insights")
+
+                st.write("Public Repositories:", github_data["total_repos"])
+                st.write("Followers:", github_data["followers"])
+                st.write("Total Stars:", github_data["total_stars"])
+
+                st.subheader("Languages Used")
+                st.write(github_data["languages"])
+            else:
+                st.warning("Invalid GitHub username")
+
     else:
         st.warning("Please upload resume")
-
-from github_analyzer import analyze_github_profile
-
-username = input("Enter GitHub username: ")
-data = analyze_github_profile(username)
-
-print(data)
 
