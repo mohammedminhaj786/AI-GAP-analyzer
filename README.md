@@ -1,6 +1,3 @@
-## 🚀 Live Demo
-https://opportunity-gap-analyzer-nhljuv7itcuaylklistpbo.streamlit.app/
-
 #  AI Opportunity Gap Analyzer
 
 ##  Overview
@@ -185,22 +182,6 @@ Data visualization dashboards
 Real-world problem solving
 
 End-to-end application development
-
-## 📊 Application Preview
-
-![Dashboard](assets/Home%20Screen.png)
-![Git Analysis](assets/github%20analysis.png)
-![Skill Matching](assets/matching%20skills.png)
-![Skill gap overview](assets/skillgap%20overview.png)
-![Readiness Score](assets/Readiness%20Score.png)
-
-## 💡 Why I Built This Project
-
-Many job seekers focus only on resume formatting but struggle to understand real industry expectations.
-
-I built this AI tool to help users analyze their career readiness by comparing their resume skills and GitHub activity with industry job requirements.
-
-This project helped me learn AI-driven analytics, API integration, and full-stack AI development.
 
 🤝 Contribution
 Contributions are welcome!
