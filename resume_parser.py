@@ -1,5 +1,32 @@
-from utils import SKILL_DATABASE
 
+
+from utils import SKILL_DATABASE
+import PyPDF2
+import docx
+
+# ---------- Extract Text From PDF ----------
+def extract_text_from_pdf(file):
+    reader = PyPDF2.PdfReader(file)
+    text = ""
+
+    for page in reader.pages:
+        text += page.extract_text()
+
+    return text
+
+
+# ---------- Extract Text From DOCX ----------
+def extract_text_from_docx(file):
+    doc = docx.Document(file)
+    text = ""
+
+    for para in doc.paragraphs:
+        text += para.text
+
+    return text
+
+
+# ---------- Extract Skills ----------
 def extract_skills_from_resume(resume_text):
     found_skills = []
 
