@@ -1,0 +1,18 @@
+John Doe
+AI Engineer Aspirant
+
+Summary:
+Experienced developer with a strong background in Python and Machine Learning.
+Skilled in building predictive models and analyzing data.
+
+Skills:
+- Python
+- Machine Learning
+- Pandas
+- NumPy
+- Git
+- SQL
+
+Projects:
+- Predictive Sales Model using Python and Scikit-learn.
+- Data Visualization dashboard with Matplotlib.

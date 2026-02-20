@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Opportunity Gap Analyzer | Career Readiness v2.0</title>
+    <!-- Fonts -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700&family=Inter:wght@400;500;600&display=swap"
+        rel="stylesheet">
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+
+<body>
+    <div class="main-layout">
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar">
+            <div class="logo">
+                <i class="fa-solid fa-bolt"></i>
+                <h2>Career<span style="color:var(--primary)">Gap</span>.ai</h2>
+            </div>
+
+            <nav class="nav-menu">
+                <a href="#" class="nav-item active"><i class="fa-solid fa-house"></i> Home</a>
+                <a href="#" class="nav-item"><i class="fa-solid fa-magnifying-glass-chart"></i> History</a>
+                <a href="#" class="nav-item"><i class="fa-solid fa-user-gear"></i> Profile</a>
+            </nav>
+
+            <div style="margin-top: auto; padding-top: 20px; border-top: 1px solid var(--glass-border);">
+                <div class="pulse-badge">
+                    <div class="pulse-dot"></div>
+                    AI Engine Online
+                </div>
+            </div>
+        </aside>
+
+        <!-- Content Area -->
+        <main class="content-area">
+            <header>
+                <h1>Evaluate Your Career Readiness</h1>
+                <div style="display: flex; gap: 12px;">
+                    <button class="nav-item" style="padding: 8px 16px;"><i class="fa-solid fa-circle-question"></i>
+                        Help</button>
+                    <button class="nav-item" style="padding: 8px 16px;"><i class="fa-solid fa-share-nodes"></i>
+                        Share</button>
+                </div>
+            </header>
+
+            <div class="grid-main">
+                <!-- Data Input Column -->
+                <div class="input-column">
+                    <section class="glass-card">
+                        <h3 style="font-family: var(--font-head); margin-bottom: 24px;"><i
+                                class="fa-solid fa-wand-magic-sparkles"></i> Analyze Profile</h3>
+
+                        <form id="analysisForm">
+                            <div class="form-group">
+                                <label><i class="fa-solid fa-briefcase"></i> Target Career Domain</label>
+                                <div class="select-wrapper">
+                                    <select id="jobRole" class="input-style" required>
+                                        <option value="" disabled selected>Choose your target role...</option>
+                                    </select>
+                                    <i class="fa-solid fa-chevron-down"></i>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label><i class="fa-solid fa-file-invoice"></i> Professional Resume</label>
+                                <label class="upload-box" id="dropArea">
+                                    <i class="fa-solid fa-cloud-arrow-up"></i>
+                                    <div id="fileInfo">
+                                        <p>Click or drag your resume</p>
+                                        <small>PDF, DOCX, or TXT (Max 5MB)</small>
+                                    </div>
+                                    <input type="file" id="resumeUpload" hidden accept=".pdf,.docx,.txt" required>
+                                </label>
+                            </div>
+
+                            <div class="form-group">
+                                <label><i class="fa-brands fa-github"></i> GitHub Profile Link</label>
+                                <input type="url" id="githubLink" class="input-style"
+                                    placeholder="https://github.com/your-username">
+                            </div>
+
+                            <button type="submit" class="btn-primary" id="analyzeBtn">
+                                <i class="fa-solid fa-brain"></i>
+                                <span class="btn-text">EVALUATE PROFILE</span>
+                            </button>
+                        </form>
+                    </section>
+                </div>
+
+                <!-- Analysis Display Column -->
+                <div class="display-column">
+                    <!-- Placeholder View -->
+                    <div id="placeholderView" class="glass-card"
+                        style="height: 100%; display: flex; align-items: center; justify-content: center; text-align: center; background: rgba(255,255,255,0.02); border: 1px dashed var(--glass-border);">
+                        <div style="max-width: 400px;">
+                            <i class="fa-solid fa-chart-pie"
+                                style="font-size: 64px; color: var(--text-secondary); margin-bottom: 24px; opacity: 0.3;"></i>
+                            <h2 style="font-family: var(--font-head); margin-bottom: 12px;">Ready for Evaluation</h2>
+                            <p style="color: var(--text-secondary); font-size: 15px;">Provide your target role and
+                                resume to generate a deep-dive career readiness analysis.</p>
+                        </div>
+                    </div>
+
+                    <!-- Analyzing Loader -->
+                    <div id="loaderView" class="glass-card hidden" style="height: 100%;">
+                        <div class="ai-loader">
+                            <div class="loader-icon"></div>
+                            <h3 style="font-family: var(--font-head); margin-bottom: 8px;">AI Engine Analyzing...</h3>
+                            <p style="color: var(--text-secondary);">Identifying skill synergies and knowledge gaps.</p>
+                        </div>
+                    </div>
+
+                    <!-- Results Results -->
+                    <div id="resultsView" class="results-container hidden">
+                        <!-- Top Score Card -->
+                        <div class="glass-card score-display">
+                            <div class="readiness-orb">
+                                <svg width="140" height="140">
+                                    <circle cx="70" cy="70" r="60" fill="none" stroke="rgba(255,255,255,0.05)"
+                                        stroke-width="12" />
+                                    <circle id="progressCircle" cx="70" cy="70" r="60" fill="none"
+                                        stroke="var(--primary)" stroke-width="12" stroke-dasharray="377"
+                                        stroke-dashoffset="377" stroke-linecap="round" />
+                                </svg>
+                                <div class="val" id="readinessVal">0%</div>
+                            </div>
+                            <div class="metrics-info">
+                                <div class="metric-bar-group">
+                                    <div class="metric-label">
+                                        <span>Resume Match</span>
+                                        <span id="resumeScoreText">0%</span>
+                                    </div>
+                                    <div class="bar-bg">
+                                        <div id="resumeBar" class="bar-fill" style="width: 0%"></div>
+                                    </div>
+                                </div>
+                                <div class="metric-bar-group">
+                                    <div class="metric-label">
+                                        <span>Technical Activity (GitHub)</span>
+                                        <span id="githubScoreText">0%</span>
+                                    </div>
+                                    <div class="bar-bg">
+                                        <div id="githubBar" class="bar-fill"
+                                            style="width: 0%; background: linear-gradient(to right, var(--secondary), var(--accent))">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Skills Tags Mapping -->
+                        <div class="glass-card">
+                            <h4 style="font-family: var(--font-head); margin-bottom: 20px;"><i
+                                    class="fa-solid fa-layer-group"></i> Skill Mapping Analysis</h4>
+                            <div style="display: flex; flex-direction: column; gap: 24px;">
+                                <div>
+                                    <p
+                                        style="font-size: 13px; font-weight: 600; color: var(--success); margin-bottom: 12px;">
+                                        MATCHED STRENGTHS</p>
+                                    <div class="tags-container" id="matchedTags"></div>
+                                </div>
+                                <div>
+                                    <p
+                                        style="font-size: 13px; font-weight: 600; color: var(--danger); margin-bottom: 12px;">
+                                        IDENTIFIED GAPS</p>
+                                    <div class="tags-container" id="missingTags"></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- GitHub Data -->
+                        <div id="ghDataSection" class="glass-card hidden">
+                            <h4 style="font-family: var(--font-head); margin-bottom: 20px;"><i
+                                    class="fa-brands fa-github"></i> Repository Performance</h4>
+                            <div class="gh-stats-grid" id="githubStats"></div>
+                        </div>
+
+                        <!-- Recommendations -->
+                        <div class="glass-card">
+                            <h4 style="font-family: var(--font-head); margin-bottom: 24px;"><i
+                                    class="fa-solid fa-lightbulb"></i> Actionable Roadmap</h4>
+                            <div id="roadmapContent"></div>
+                        </div>
+
+                        <!-- Detailed Roadmap (New) -->
+                        <div id="detailedRoadmapView" class="glass-card hidden" style="margin-top: 32px;">
+                            <h4
+                                style="font-family: var(--font-head); margin-bottom: 24px; display: flex; justify-content: space-between; align-items: center;">
+                                <span><i class="fa-solid fa-route"></i> Detailed Growth Roadmap</span>
+                                <span
+                                    style="font-size: 10px; background: var(--primary); padding: 4px 10px; border-radius: 20px;">SKILL
+                                    MASTERY</span>
+                            </h4>
+                            <div id="detailedRoadmapContent">
+                                <!-- Populated by JS -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="/static/script.js"></script>
+</body>
+
+</html>
